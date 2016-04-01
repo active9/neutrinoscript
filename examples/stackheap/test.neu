@@ -1,0 +1,20 @@
+struct Vector {
+	float x, y;
+	function Vector(float x, float y) {
+		this->x = x;
+		this->y = y;
+	}
+	function toString() {
+		return "{x: " + this->x + ", y: " + this->y + "}"
+	}
+}
+
+let Vector v0(1, 2)
+let Vector v1(2, 3)
+console.log(v0);
+v0 = v1;
+console.log(v1);
+
+let Vector * v = new Vector(1, 2);
+console.log(v);
+delete v;

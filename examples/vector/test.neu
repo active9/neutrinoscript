@@ -1,0 +1,14 @@
+struct Vector {
+	float x, y;
+	function Vector(float x, float y) {
+		this->x = x;
+		this->y = y;
+	}
+	function toString() {
+		return "{x: " + this->x + ", y: " + this->y + "}"
+	}
+}
+
+let Vector *car;
+car->Vector(10,20);
+console.log(car->toString());

@@ -1,0 +1,95 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var fs = require('fs');
+var path = require('path');
+var neutrino = require('../index.js');
+
+program
+  .version(require('../package.json').version)
+
+program
+  .command('compile <file>')
+  .alias('co')
+  .description('compile a .neu file to .neutrino')
+  .option("-b, --build_build <build_path>", "build output (ex: ./build/<file>.neutrino)")
+  .option("-f, --file <file>", "The file to compile")
+  .action(function(cmd, options){
+  	if (!options.file) {
+  		options.file = process.argv[process.argv.length-1];
+  	}
+  	if (!options.build_path) {
+  		options.build_path = './build/'+ path.basename(options.file).replace('.neu','.neutrino');
+  	}
+  	options.file = path.resolve(options.file);
+  	options.build_path = path.resolve(options.build_path);
+    process.stdout.write('neutrino> '+ cmd +' compiling');
+    setInterval(function() {
+    	process.stdout.write('.');
+    }, 1000);
+	// Compile .neu to .neutrino
+	neutrino.convertToJS(path.resolve(options.file),path.resolve(options.build_path));
+  }).on('--help', function() {
+    console.log('  Examples:');
+    console.log();
+    console.log('    $ compile test.neu');
+    console.log('    $ compile test.neu ./bin/test.neutrino');
+    console.log();
+  });
+
+program
+  .command('run <file>')
+  .alias('go')
+  .description('run a .neu file')
+  .option("-f, --file <file>", "The .neu file to run")
+  .action(function(cmd, options){
+  	if (!options.file) {
+  		options.file = process.argv[process.argv.length-1];
+  	}
+    fs.exists(path.resolve(options.file), function(exists) {
+      if (exists) {
+      	if (options.file.match(/.*\.neutrino/g)) {
+    		// RUN A Compiled Neutrino Binary
+    		neutrino.runBinary(path.resolve(options.file));
+      	} else {
+    		// RUN A Neu File
+    		neutrino.run(path.resolve(options.file));
+      	}
+      } else {
+        console.log("FIle Not Found:", options.file);
+        process.exit(1);
+      }
+    });
+  }).on('--help', function() {
+    console.log('  Example:');
+    console.log();
+    console.log('    $ run test.neu');
+    console.log();
+  });
+
+program
+  .command('exec <file>')
+  .alias('ex')
+  .description('run a compiled .neutrino file')
+  .option("-f, --file <file>", "The .neutrino binary to run")
+  .action(function(cmd, options){
+  	if (!options.file) {
+  		options.file = process.argv[process.argv.length-1];
+  	}
+	// RUN A Compiled Neutrino Binary
+	neutrino.runBinary(path.resolve(options.file));
+  }).on('--help', function() {
+    console.log('  Example:');
+    console.log();
+    console.log('    $ exec test.neutrino');
+    console.log();
+  });
+
+program
+  .command('*')
+  .action(function(env){
+    console.log('Try neutrino --help', env);
+    process.exit(1);
+  });
+
+program.parse(process.argv);

@@ -1,0 +1,13 @@
+if(true is true)!~
+	_^('true is true')
+~
+
+if(false not true)~
+	_^('true')
+~else if (false no true)~
+	_^('elseif')
+~else!~
+	_^('else')
+~
+
+if(false not true)~_^('true') ~else if (false no true)~_^('elseif') ~else!~_^('else') ~

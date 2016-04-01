@@ -1,0 +1,59 @@
+{
+  "name": "compile-js-like-c",
+  "description": "Compile JS like C.",
+  "version": "0.1.2",
+  "author": {
+    "name": "Guillaume Gonnet",
+    "url": "https://github.com/ParksProjets"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ParksProjets/compile-js-like-c"
+  },
+  "license": {
+    "type": "GPLv2",
+    "url": "https://github.com/ParksProjets/compile-js-like-c/blob/master/LICENSE"
+  },
+  "keywords": [
+    "preprocessor",
+    "compile",
+    "compiler",
+    "c"
+  ],
+  "files": [
+    "index.js",
+    "lib",
+    "bin"
+  ],
+  "bin": {
+    "compile-like-c": "./bin/global.js"
+  },
+  "dependencies": {},
+  "gitHead": "a15ddab10f7f91ebb0b7208876dff70b46c7e1d6",
+  "bugs": {
+    "url": "https://github.com/ParksProjets/compile-js-like-c/issues"
+  },
+  "homepage": "https://github.com/ParksProjets/compile-js-like-c",
+  "_id": "compile-js-like-c@0.1.2",
+  "scripts": {},
+  "_shasum": "12adddc74d501f094c497d9da9a6b066600044a6",
+  "_from": "compile-js-like-c@*",
+  "_npmVersion": "1.4.21",
+  "_npmUser": {
+    "name": "parksprojets",
+    "email": "gonnet.guillaume97@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "parksprojets",
+      "email": "gonnet.guillaume97@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "12adddc74d501f094c497d9da9a6b066600044a6",
+    "tarball": "http://registry.npmjs.org/compile-js-like-c/-/compile-js-like-c-0.1.2.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/compile-js-like-c/-/compile-js-like-c-0.1.2.tgz",
+  "readme": "ERROR: No README data found!"
+}

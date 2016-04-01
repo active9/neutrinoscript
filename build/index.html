@@ -1,0 +1,17 @@
+<html>
+<head>
+	<title>Neutrino Script On The Web</title>
+	<script src="neutrino.js"></script>
+</head>
+<body>
+<p id='me'>NeutrinoScript Loading</p>
+<script type="text/neutrinoscript">
+	#def HI 'hello world'
+	document.getElementById('me').innerHTML = HI;
+</script>
+<script>
+	// Manually control when to execute the neutrinoscript tags on the current DOM
+	window.neutrino.web(document);
+</script>
+</body>
+</html>

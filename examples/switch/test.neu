@@ -1,0 +1,12 @@
+let text = '';
+switch (new Date().getDay())~
+    case 6:
+        text = "It is Saturday";
+        break;
+    case 0:
+        text = "It is Sunday";
+        break;
+    default:
+        text = "Today is a Weekday";
+~
+_^(text)

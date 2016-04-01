@@ -1,0 +1,18 @@
+struct Point {
+  int x, y, z;
+};
+
+struct Line {
+  Point start, end;
+};
+
+struct Box {
+  Line left, top, right, bottom;
+};
+
+let Box b;
+console.log(b.top.start.x);
+
+let Line *p = &b.top;
+p->start.x = 42;
+console.log(b.top.start.x);

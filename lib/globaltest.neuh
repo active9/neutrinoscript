@@ -1,0 +1,9 @@
+/*#
+
+Test Global #include <>
+
+#*/
+
+#define HALFPI 1.5707963
+
+#define SQUARE

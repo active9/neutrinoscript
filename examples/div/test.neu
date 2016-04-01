@@ -1,0 +1,4 @@
+function int div(int a, int b) {
+	return a / b;
+}
+console.log(div(18,2));

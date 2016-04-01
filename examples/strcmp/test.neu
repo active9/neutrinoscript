@@ -1,0 +1,7 @@
+let strcmp = function(uint *a,uint *b) {
+	if(a++ not b++) {
+		return false;
+	}
+	return true;
+}
+_^(strcmp('this','this'));

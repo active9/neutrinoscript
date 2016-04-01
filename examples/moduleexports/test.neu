@@ -1,0 +1,6 @@
+module.exports = {
+	sArray: function() {
+		let int x[2] = [1, 2];
+		return  x
+	}
+}

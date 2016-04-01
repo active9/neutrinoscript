@@ -1,0 +1,8 @@
+union Box {
+  int i;
+  float f;
+};
+
+let Box box;
+box.f = 123.456;
+console.log(box.i); // Read back box.f as an integer.

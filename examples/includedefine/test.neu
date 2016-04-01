@@ -1,0 +1,5 @@
+let path = require('path');
+#include "fs.neuh"
+
+let testfile = FS.readFileSync(path.resolve('./package.json'));
+console.log(testfile.toString());

@@ -1,0 +1,39 @@
+{
+  "name": "neutrinoscript",
+  "version": "1.0.0",
+  "description": "Like C for Javascript",
+  "bin": {
+    "neutrino": "./bin/neutrino"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/active9/neutrinoscript"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify index.js -o build/neutrinoscript.min.js -s neutrino",
+    "dev": "browserify index.js -o build/neutrinoscript.js -d -s neutrino",
+    "test": "jasmine"
+  },
+  "keywords": [
+    "c",
+    "neutrino",
+    "neu",
+    "javascript",
+    "js"
+  ],
+  "author": "Active 9 LLC.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/active9/neutrinoscript/issues"
+  },
+  "homepage": "http://neutrinoscript.com/",
+  "dependencies": {
+    "browserify-fs": "^1.0.0",
+    "commander": "^2.9.0",
+    "compressjs": "^1.0.3",
+    "google-closure-compiler": "^20160208.1.0",
+    "neutrino-memory": "*",
+    "osenv": "^0.1.3"
+  }
+}

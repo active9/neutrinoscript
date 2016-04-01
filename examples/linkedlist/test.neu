@@ -1,0 +1,27 @@
+struct Node {
+  Node *next;
+  int value;
+};
+
+let Node *head = new Node, *tail = head;
+
+function Node *add(int value) {
+  let Node *next = new Node;
+  next->value = value;
+  tail->next = next;
+  tail = next;
+  return next;
+}
+
+console.log(add(1));
+console.log(add(2));
+console.log(add(3));
+
+traceList(head->next);
+
+function void traceList(Node *p) {
+  while (p) {
+    console.log("Node at address: " + p + ", has value: " + p->value);
+    p = p->next;
+  }
+}

@@ -1,0 +1,7 @@
+/*#
+
+Test #include
+
+#*/
+
+console.log('Hi');

@@ -1,0 +1,9 @@
+
+function int GCD(int x, int y) {
+    if(y===0)  // base case, the programs stops if y reaches 0.
+        return x;     //it returns the GCD
+    else 
+        return GCD(y,x%y); //if y doesn't reach 0 then recursion continues
+}
+
+console.log(GCD(9,81));

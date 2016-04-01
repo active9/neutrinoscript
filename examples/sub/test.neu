@@ -1,0 +1,4 @@
+function int sub(int a, int b) {
+	return a - b;
+}
+console.log(sub(12,3));

@@ -1,0 +1,31 @@
+// One line comment
+
+//# One line comment
+
+/*
+
+Multi-line comment
+
+*/
+
+/*#
+
+Multi-line comment that is excluded when compiling
+
+#*/
+
+
+<!--
+
+HTML Style Multi-line comment that is excluded when compiling
+
+-->
+
+<%--
+
+.NET Style Multi-line comment that is excluded when compiling
+
+-->
+
+define SUM(a,b) a+b
+console.log(SUM(1,2));

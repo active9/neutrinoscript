@@ -1,0 +1,38 @@
+// Pure Javascript Function without args
+let yes = function() {
+	return true;
+}
+console.log(yes());
+
+// Pure NeutrinoScript Function without args
+yes = ~()~
+	^_ true
+~
+_^(yes())
+
+// Pure Javascript Function with args
+yes = function(c) {
+	if(c === 'no')
+		return false;
+	else
+		return true;
+}
+console.log(yes('no'));
+
+// Pure NeutrinoScript Function with args
+yes = ~(c)~
+	if(c is 'no')
+		return false
+	else
+		return true
+~
+_^(yes('no'),yes('yes'));
+
+// Pure NeutrinoScript Function with callback
+yes = ~(c,cb)~
+	if(c is 'no')
+		cb(false)
+	else
+		cb(true)
+~
+yes('no',~(res)~_^(res) ~);

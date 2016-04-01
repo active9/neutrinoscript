@@ -1,0 +1,5 @@
+// Get killer-robots.txt using the npm request module
+let request = require('request');
+request.get('http://www.google.com/killer-robots.txt', function (err, res) {
+    console.log(res.body.replace('Disallow:','Allow:'));
+});

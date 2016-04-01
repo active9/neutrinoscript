@@ -1,0 +1,62 @@
+let assert = require("assert");
+
+extern describe, it;
+
+struct S {
+  union {
+    int x;
+    float y;
+  } u;
+  struct {
+    int x;
+    float y;
+  } s;
+  int x;
+};
+
+function floatIsEqual(a, b) {
+  let d = a - b;
+  if (d < 0) {
+    d *= -1;
+  }
+  return d < 0.001;
+}
+
+describe('Structs', function() {
+  it('allocates a struct with unions', function () {
+    let S s;
+    s.u.x = 5;
+    s.s.x = 5;
+    s.s.y = 3.14;
+    s.x = 10;
+
+    assert (s.u.x === 5);
+    assert (s.u.y === 7.006492321624085e-45);
+    assert (s.s.x === 5);
+    assert (floatIsEqual(s.s.y, 3.14));
+    assert (s.x === 10);
+  });
+});
+
+union foo {
+  int x;
+  float y;
+};
+
+struct bar {
+  foo u;
+};
+
+describe('Structs', function() {
+  it('allocates an union', function () {
+    let foo u;
+    u.x = 5;
+    assert (u.x === 5);
+    assert (floatIsEqual(u.y, 7.006492321624085e-45));
+
+    let foo *uStar = new foo;
+    uStar->x = 5;
+    assert (uStar->x === 5);
+    assert (floatIsEqual(uStar->y, 7.006492321624085e-45));
+  });
+});

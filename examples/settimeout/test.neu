@@ -1,0 +1,27 @@
+// Pure Javascript
+setTimeout(function() {
+	console.log(true);
+},100);
+
+// Mixed NeutrinoScript
+setTimeout(function()~
+	console.log(true);
+~,100);
+
+// Strange But Safely Mixed NeutrinoScript
+~>(~() {
+	console.log(true);
+~, 100);
+
+// Stranger But Still Ok NeutrinoScript
+~>(~()~
+	_^(true);
+}, 100);
+
+// Pure NeutrinoScript
+~>(~()~
+	_^(true);
+~, 100);
+
+// Pure Single-Line NeutrinoScript
+~>(~()~_^(true) ~,100)

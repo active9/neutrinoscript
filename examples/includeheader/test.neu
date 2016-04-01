@@ -1,0 +1,16 @@
+#include "includetest.neuh"
+#define ADD_2(v) v+2
+#define MULT_2(v) v*2
+
+#ifdef SQUARE
+#ifdef OK
+
+let circle = {
+	doublepie: ADD_2(PI),
+	pie: MULT_2(HALFPI)
+};
+
+_^(circle);
+
+#endif
+#endif

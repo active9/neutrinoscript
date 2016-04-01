@@ -1,0 +1,14 @@
+#inc <globaltest.neuh>
+#inc "includetest.neuh"
+#def ADD_2(v) v+2
+#def MULT_2(v) v*2
+
+#ifdef SQUARE
+#ifdef OK
+
+let neutrino = ADD_2(PI) * MULT_2(HALFPI)
+
+console.log(neutrino);
+
+#endif
+#endif

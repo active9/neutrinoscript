@@ -1,0 +1,11 @@
+// Javascript memory management like-c
+typedef byte *malloc_ty(uint);
+let malloc_ty malloc = (malloc_ty)(require('neutrino-memory').malloc);
+
+// Allocate an int on the heap using new.
+let int *y = malloc(sizeof(int));
+console.log(y);
+
+// Alternate, more convenient syntax.
+let int *x = new int;
+console.log(x);

@@ -1,0 +1,13 @@
+let int x = 42;      // Declare 'x' as int and assign 42 to it.
+let int *y = &x;     /* Declare 'y' as a pointer to int and assign it
+                        the address of x. Since JavaScript doesn't
+                        allow taking references to variables, we
+                        allocate 'x' on an emulated stack. */
+let int **z = &y;    // Declare 'z' as a pointer to a pointer to int.
+console.log(x);
+*y = 1;              // Assign to the variable pointed to by 'y'.
+console.log(x);
+**z = 12;
+console.log(x);
+**z = ***(&z);
+console.log(x);

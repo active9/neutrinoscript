@@ -1,0 +1,5 @@
+#include "includetest.js"
+
+let data = fs.readFileSync('./package.json');
+
+_^(data.length);

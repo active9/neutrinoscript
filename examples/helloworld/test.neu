@@ -1,0 +1,3 @@
+define GREETING 'hi'
+define HELLO_WORLD _^(GREETING)
+HELLO_WORLD

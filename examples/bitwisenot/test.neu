@@ -1,0 +1,41 @@
+// Converted From Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators
+let flags = 5;   // binary 0101
+let FLAG_A = 1; // 0001
+let FLAG_B = 2; // 0010
+let FLAG_C = 4; // 0100
+let FLAG_D = 8; // 1000
+let mask = FLAG_A | FLAG_B | FLAG_D; // 0001 | 0010 | 1000 => 1011
+
+// if we own a cat
+if (flags & FLAG_C) { // 0101 & 0100 => 0100 => true
+   // do stuff
+}
+
+// if we own a bat or we own a cat
+// (0101 & 0010) || (0101 & 0100) => 0000 || 0100 => true
+if ((flags & FLAG_B) || (flags & FLAG_C)) {
+   // do stuff
+}
+
+// yes, we own a cat and a duck
+mask = FLAG_C | FLAG_D; // 0100 | 1000 => 1100
+flags |= mask;   // 0101 | 1100 => 1101
+
+// no, we don't have an ant problem or own a cat
+mask = ~~ (FLAG_A | FLAG_C); // ~0101 => 1010 & because ~ = function in neutrino script use ~~ instead
+flags &= mask;   // 1101 & 1010 => 1000
+
+// no, we don't have an ant problem, and we don't own a cat
+mask = ~~FLAG_A & ~~FLAG_C;
+flags &= mask;   // 1101 & 1010 => 1000
+
+// if we didn't have a bat, we have one now, 
+// and if we did have one, bye-bye bat
+// same thing for cats
+mask = FLAG_B | FLAG_C;
+flags = flags ^ mask;   // 1100 ^ 0110 => 1010
+
+// entering parallel universe...
+flags = ~~flags;    // ~1010 => 0101
+
+_^(flags);

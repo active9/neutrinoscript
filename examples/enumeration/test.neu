@@ -1,0 +1,5 @@
+// Here BIT0_B = 0, BIT0_C = 1, BIT0_D = 2, BIT0_E = 3
+#enum
+  BIT0_B, BIT0_C, BIT0_D, BIT0_E
+#endenum
+console.log(BIT0_B,BIT0_C,BIT0_D,BIT0_E);

@@ -1,0 +1,9 @@
+fs = require 'fs'
+
+class File
+  constructor: () ->
+    @_fs = new fs () =>
+      @_fslevel = 0
+
+  readFile: (filename) ->
+  	return @_fs.readFileSync filename;

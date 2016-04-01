@@ -1,0 +1,14 @@
+struct Node {
+	Node *next;
+	int value;
+};
+
+let Node *head = new Node, *last = head;
+
+for (let int i = 0; i < 4; i++) {
+	let Node *next = new Node;
+	next->value = i;
+	console.log(i);
+	last->next = next;
+	last = next;
+}

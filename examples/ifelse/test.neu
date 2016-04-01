@@ -1,0 +1,6 @@
+let a = 'else'
+if (a === 'if')~
+	_^('if')
+~else!~
+	_^('else')
+~

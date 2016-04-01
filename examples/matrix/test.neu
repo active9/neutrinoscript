@@ -1,0 +1,40 @@
+struct M {
+	float elements[4][4];
+	function mul(M *other, M *result) {
+		for (let int j = 0; j < 4; j++) {
+			for (let int k = 0; k < 4; k++) {
+				for (let int i = 0; i < 4; i++) {
+					result->elements[i][j];
+					other->elements[k][j];
+					this->elements[i][k];
+				}
+			}
+		}
+	}
+}
+
+let Matrix = (function() {
+	function matrix() {
+		this.m = new M();
+	}
+	matrix.prototype.mul = function (other) {
+		let M * a = (M *)(this.m);
+		let M * b = (M *)(other.m);
+		let c = new Matrix();
+		a->mul(b, (M *)(c.m));
+		return c;
+	};
+	matrix.prototype.free = function () {
+		delete (M *)(this.m);
+		delete this.m; // @TODO: Test For Memory leak?
+	};
+	return matrix;
+})();
+
+let x = new Matrix();
+let y = new Matrix();
+let z = x.mul(y);
+
+z.free();
+
+console.log(x, y, z);
