@@ -8,10 +8,11 @@ Neutrino script is a subset of javascript designed to allow low level memory man
 
 # Installing
 
-Using npm simply type:
+Using npm on your command prompt / terminal run the following commands:
 
 ```bash
 npm install -g neutrino
+npm install -g neutrino-memory
 ```
 
 # Getting Started

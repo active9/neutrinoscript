@@ -20,7 +20,7 @@ var jsoptions = { 'only-parse': false,
 	nowarn: false
 }
 
-module.exports = {
+var neutrino = {
 
 	/**
 	 * Executes and runs a .neu script with optional callback
@@ -148,4 +148,12 @@ module.exports = {
 			console.log("Error:", e);
 		}
 	}
+}
+
+module.exports = {
+	run: neutrino.run,
+	convertToJS: neutrino.convertToJS,
+	runBinary: neutrino.runBinary,
+	web: neutrino.web,
+	webToJS: neutrino.webToJS
 }

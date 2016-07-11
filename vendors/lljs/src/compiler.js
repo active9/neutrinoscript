@@ -1567,7 +1567,12 @@ var path = require('path');
           new CallExpression(new Identifier("load"), [literal("memory.js")]),
           new Identifier("memory")]));
       } else {
-        var memoryPath = path.resolve('node_modules/neutrino-memory');
+       var memoryPath = '';
+        if (typeof document === 'undefined') {
+          memoryPath = path.resolve('node_modules/neutrino-memory');
+        } else {
+          memoryPath = 'neutrino-memory';
+        }
         mdecl = new VariableDeclarator(cachedMEMORY, createRequire(memoryPath));
       }
       body.push(new VariableDeclaration("const", [mdecl]));
