@@ -27,6 +27,22 @@ neutrino run /path/to/your/script.neu
 
 Please see the documentation on how to use the provided build/neutrino.js file on the web.
 
+** Changes from 1.0.1 to 1.1.0 introduce a new way to load neutrino script via the web.
+
+Simply replace:
+
+```javascript
+window.neutrino.web(document);
+```
+
+with
+
+```javascript
+var neutrino = require('neutrino');
+neutrino.web(document);
+```
+
 # License
 
 Neutrino script is licensed under the MIT license
+

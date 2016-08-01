@@ -1573,6 +1573,7 @@ var path = require('path');
         } else {
           memoryPath = 'neutrino-memory';
         }
+
         mdecl = new VariableDeclarator(cachedMEMORY, createRequire(memoryPath));
       }
       body.push(new VariableDeclaration("const", [mdecl]));
