@@ -1,10 +1,16 @@
 # Neutrino Script
-
+![NeutrinoScript](https://raw.githubusercontent.com/active9/neutrinoscript/master/neutrino.png)
 Like C for Javascript
 
 # About
 
 Neutrino script is a subset of javascript designed to allow low level memory management, shortcodes, defines, and more. See our website at http://neutrinoscript.com/ for more detailed documentation.
+
+The syntax is fresh yet similar to javascript while providing extra abstraction layers to allow more logical code production. This means a script written in Neutrino script can be converted into javascript as it is converted into javascript during the complation process.
+
+# Supported Javascript
+
+Currently Neutrino script is designed to run under EMCAScript 5 equivalent javascript syntax only.
 
 # Installing
 
@@ -19,9 +25,13 @@ npm install -g neutrino-memory
 
 See our documentation on our website http://neutrinoscript.com/ for examples of how to write neutrinoscript .neu files.
 
-# Running in NodeJS
+# Converting NeutrinoScript to Javascript
 
-neutrino run /path/to/your/script.neu
+neutrino convert /path/to/your/script.neu /output/path/script.js
+
+# Running via NodeJS
+
+neutrino /path/to/your/script.neu
 
 # Running in the Browser
 

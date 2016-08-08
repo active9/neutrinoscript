@@ -86,10 +86,55 @@ program
   });
 
 program
+  .command('convert <file>')
+  .alias('js')
+  .description('convert .neu file to .js')
+  .option("-f, --file <file>", "The .neu file to run")
+  .option("-j, --js_file <js_file>", "The .js output (ex: ./build/<file>.js)")
+  .action(function(cmd, options){
+    if (!options.file) {
+      options.file = process.argv[process.argv.length-2];
+    }
+    if (!options.js_file) {
+      options.js_file = process.argv[process.argv.length-1];
+    }
+    fs.exists(path.resolve(options.file), function(exists) {
+      if (exists) {
+        // Convert To Javascript
+        neutrino.convertToJS(path.resolve(options.file), path.resolve(options.js_file), { compress: false });
+      } else {
+        console.log("FIle Not Found:", options.file);
+        process.exit(1);
+      }
+    });
+  }).on('--help', function() {
+    console.log('  Example:');
+    console.log();
+    console.log('    $ convert test.neu test.js');
+    console.log();
+  });
+
+program
   .command('*')
-  .action(function(env){
-    console.log('Try neutrino --help', env);
-    process.exit(1);
+  .description('run a .neu or .neutrino file')
+  .action(function(cmd, options){
+    if (!options.file) {
+      options.file = process.argv[process.argv.length-1];
+    }
+    fs.exists(path.resolve(options.file), function(exists) {
+      if (exists) {
+        if (options.file.match(/.*\.neutrino/g)) {
+        // RUN A Compiled Neutrino Binary
+        neutrino.runBinary(path.resolve(options.file));
+        } else {
+        // RUN A Neu File
+        neutrino.run(path.resolve(options.file));
+        }
+      } else {
+        console.log("FIle Not Found:", options.file);
+        process.exit(1);
+      }
+    });
   });
 
 program.parse(process.argv);

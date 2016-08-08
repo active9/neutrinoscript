@@ -241,6 +241,9 @@
       result = neutrinoShortcuts(result);
       options.filename = filename;
       options.basename = basename;
+      if (options.compress !== false) {
+        options.compress = true;
+      }
       var code = compile(result, options);
       var ClosureCompiler = require('google-closure-compiler').compiler;
  
@@ -259,11 +262,16 @@
          
       var compilerProcess = closureCompiler.run(function(exitCode, stdOut, stdErr) {
         //compilation complete
-        var compressjs = require('compressjs');
-        var algorithm = compressjs.BWTC;
-        var data = new Buffer(fs.readFileSync(infile), 'utf8');
-        var compressed = new Buffer(algorithm.compressFile(data));
-        fs.writeFileSync(outfile,compressed);
+        if (options.compress) {
+          var compressjs = require('compressjs');
+          var algorithm = compressjs.BWTC;
+          var data = new Buffer(fs.readFileSync(infile), 'utf8');
+          var compressed = new Buffer(algorithm.compressFile(data));
+          fs.writeFileSync(outfile,compressed);
+        } else {
+          // @TODO Beautify Code Output
+          fs.writeFileSync(outfile,fs.readFileSync(infile));
+        }
         process.exit(1);
       });
     });

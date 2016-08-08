@@ -1,7 +1,7 @@
 <html>
 <head>
 	<title>Neutrino Script On The Web</title>
-	<script src="neutrino.js"></script>
+	<script src="neutrinoscript.js"></script>
 </head>
 <body>
 <p id='me'>NeutrinoScript Loading</p>
@@ -11,7 +11,8 @@
 </script>
 <script>
 	// Manually control when to execute the neutrinoscript tags on the current DOM
-	window.neutrino.web(document);
+	var neutrino = require('neutrino');
+	neutrino.web(document);
 </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 {
   "name": "neutrinoscript",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Like C for Javascript",
   "bin": {
     "neutrino": "./bin/neutrino"
@@ -11,8 +11,8 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "browserify -r neutrino-memory -r ./index.js:neutrino > build/neutrino-memory.min.js",
-    "dev": "browserify -r neutrino-memory -r ./index.js:neutrino -d > build/neutrino-memory.min.js",
+    "build": "browserify -r neutrino-memory -r ./index.js:neutrino > build/neutrinoscript.min.js",
+    "dev": "browserify -r neutrino-memory -r ./index.js:neutrino -d > build/neutrinoscript.js",
     "test": "jasmine"
   },
   "keywords": [
@@ -32,7 +32,7 @@
     "browserify-fs": "^1.0.0",
     "commander": "^2.9.0",
     "compressjs": "^1.0.3",
-    "google-closure-compiler": "^20160619.0.0",
+    "google-closure-compiler": "^20160713.2.0",
     "neutrino-memory": "^1.1.0",
     "osenv": "^0.1.3"
   }

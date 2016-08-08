@@ -5,7 +5,9 @@ var fs = require("fs");
 var crypto = require('crypto');
 var osenv = require('osenv');
 
-var jsoptions = { 'only-parse': false,
+var jsoptions = {
+	compress: true,
+	'only-parse': false,
 	'emit-ast': false,
 	'pretty-print': false,
 	bare: true,
@@ -62,7 +64,10 @@ var neutrino = {
 	 * @param {File} filename - The .neu file to run
 	 * @param {File} outfile - The .js output file
 	 */
-	convertToJS: function(filename,outfile) {
+	convertToJS: function(filename,outfile,options) {
+		// Passed Options Win
+		jsoptions.compress = options.compress;
+
 		try {
 			var stats = fs.statSync(path.resolve(filename));
 			if (stats) {
