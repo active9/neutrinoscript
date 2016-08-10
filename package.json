@@ -1,6 +1,6 @@
 {
   "name": "neutrinoscript",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Like C for Javascript",
   "bin": {
     "neutrino": "./bin/neutrino"
@@ -13,7 +13,8 @@
   "scripts": {
     "build": "browserify -r neutrino-memory -r ./index.js:neutrino > build/neutrinoscript.min.js",
     "dev": "browserify -r neutrino-memory -r ./index.js:neutrino -d > build/neutrinoscript.js",
-    "test": "jasmine"
+    "test": "jasmine",
+    "docs": "./node_modules/.bin/jsdoc README.md index.js -t ./node_modules/minami -d ./docs"
   },
   "keywords": [
     "c",
@@ -33,6 +34,8 @@
     "commander": "^2.9.0",
     "compressjs": "^1.0.3",
     "google-closure-compiler": "^20160713.2.0",
+    "jsdoc": "^3.4.0",
+    "minami": "^1.1.1",
     "neutrino-memory": "^1.1.0",
     "osenv": "^0.1.3"
   }
