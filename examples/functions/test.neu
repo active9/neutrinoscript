@@ -4,6 +4,12 @@ let yes = function() {
 }
 console.log(yes());
 
+// Pure Javascript EMACS 6 Function without args
+yes = () => {
+	return true;
+}
+console.log(yes());
+
 // Pure NeutrinoScript Function without args
 yes = ~()~
 	^_ true
@@ -12,6 +18,24 @@ _^(yes())
 
 // Pure Javascript Function with args
 yes = function(c) {
+	if(c === 'no')
+		return false;
+	else
+		return true;
+}
+console.log(yes('no'));
+
+// Shorthand Javascript (fun) Function with args
+yes = fun(c) {
+	if(c === 'no')
+		return false;
+	else
+		return true;
+}
+console.log(yes('no'));
+
+// Shorthand Javascript (fn) Function with args
+yes = fn(c) {
 	if(c === 'no')
 		return false;
 	else

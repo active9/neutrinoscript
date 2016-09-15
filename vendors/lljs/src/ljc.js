@@ -215,7 +215,12 @@
     str = str.replace(/→/g,'>>'); // Bitwise Right Shift
     str = str.replace(/→→/g,'>>>'); // Bitwise Zero-fill Right
     str = str.replace(/\~\~/g,'-1*'); // Bitwise Not Operator
+    str = str.replace(/\((.*\))=>|\((.*\)) =>/g, 'function($1)');
     str = str.replace(/~\(/g,'function(');
+    str = str.replace(/fn\(/g,'function(');
+    str = str.replace(/fn \(/g,'function(');
+    str = str.replace(/fun\(/g,'function(');
+    str = str.replace(/fun \(/g,'function(');
     str = str.replace(/\)~/g,') {');
     str = str.replace(/~>/g,'setTimeout');
     str = str.replace(/~</g,'clearTimeout');

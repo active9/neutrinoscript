@@ -1,0 +1,13 @@
+const o = {x: 1}
+o = {x: 2}
+_^(o) // re-assigning fails
+
+o.x = 2
+_^(o) // const does not make objects immutable!
+
+const a = []
+a = [1]
+_^(a) // re-assigning fails
+
+a.push(1)
+_^(a) // const does not make objects immutable

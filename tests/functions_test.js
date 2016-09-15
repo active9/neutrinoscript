@@ -12,7 +12,7 @@ describe("Functions", function() {
 
   it("should parse a set of functions", function(done) {
       data = data.split('\n');
-      expect(data).toEqual([ 'true', 'true', 'false', 'false true', 'false', '' ]);
+      expect(data).toEqual([ 'true', 'true', 'true', 'false', 'false', 'false', 'false true', 'false', '' ]);
       done();
   });
 

@@ -1,0 +1,2 @@
+var Variable = 'let me be';
+_^(Variable);

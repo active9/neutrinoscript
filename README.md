@@ -10,7 +10,7 @@ The syntax is fresh yet similar to javascript while providing extra abstraction 
 
 # Supported Javascript
 
-Currently Neutrino script is designed to run under EMCAScript 5 equivalent javascript syntax only.
+Currently Neutrino script is designed to run under EMCAScript 5 equivalent javascript syntax. Neutrino script itself supports EMCAScript 6 style functions to be defined that get converted to EMCAScript 5 syntax.
 
 # Installing
 
