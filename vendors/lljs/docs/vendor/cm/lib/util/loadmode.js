@@ -1,10 +1,10 @@
 (function() {
-  if (!CodeMirror.modeURL) CodeMirror.modeURL = "../mode/%N/%N.js";
+  if (!CodeMirror.modeURL) CodeMirror.modeURL = '../mode/%N/%N.js';
 
   var loading = {};
   function splitCallback(cont, n) {
     var countDown = n;
-    return function() { if (--countDown == 0) cont(); }
+    return function() { if (--countDown == 0) cont(); };
   }
   function ensureDeps(mode, cont) {
     var deps = CodeMirror.modes[mode].dependencies;
@@ -24,9 +24,9 @@
     if (CodeMirror.modes.hasOwnProperty(mode)) return ensureDeps(mode, cont());
     if (loading.hasOwnProperty(mode)) return loading[mode].push(cont);
 
-    var script = document.createElement("script");
+    var script = document.createElement('script');
     script.src = CodeMirror.modeURL.replace(/%N/g, mode);
-    var others = document.getElementsByTagName("script")[0];
+    var others = document.getElementsByTagName('script')[0];
     others.parentNode.insertBefore(script, others);
     var list = loading[mode] = [cont];
     var count = 0, poll = setInterval(function() {
@@ -44,7 +44,7 @@
   CodeMirror.autoLoadMode = function(instance, mode) {
     if (!CodeMirror.modes.hasOwnProperty(mode))
       CodeMirror.requireMode(mode, function() {
-        instance.setOption("mode", instance.getOption("mode"));
+        instance.setOption('mode', instance.getOption('mode'));
       });
   };
 }());

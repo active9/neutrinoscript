@@ -39,7 +39,7 @@ CodeMirror.overlayParser = function(base, overlay, combine) {
       if (stream.eol()) state.basePos = state.overlayPos = 0;
 
       if (state.overlayCur == null) return state.baseCur;
-      if (state.baseCur != null && combine) return state.baseCur + " " + state.overlayCur;
+      if (state.baseCur != null && combine) return state.baseCur + ' ' + state.overlayCur;
       else return state.overlayCur;
     },
     

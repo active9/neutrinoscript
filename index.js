@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var path = require('path');
-var fs = require("fs");
+var fs = require('fs');
 var crypto = require('crypto');
 var osenv = require('osenv');
 
@@ -20,7 +20,7 @@ var jsoptions = {
   memcheck: false,
   help: false,
   nowarn: false
-}
+};
 
 /**
  * Executes and runs a .neu script with optional callback
@@ -53,7 +53,7 @@ function run(filename, cb) {
         process.exit(1);
       });
     } else {
-      console.log("File Not Found:", filename);
+      console.log('File Not Found:', filename);
       process.exit(1);
     }
   } catch (e) {
@@ -79,7 +79,7 @@ function convertToJS(filename, outfile, options) {
       process.cwd(path.dirname(path.resolve(filename)));
       lljs.FromNEUtoJS(filename, outfile, jsoptions);
     } else {
-      console.log("File Not Found:", filename);
+      console.log('File Not Found:', filename);
       process.exit(1);
     }
   } catch (e) {
@@ -98,7 +98,6 @@ function runBinary(filename, cb) {
   try {
     var stats = fs.statSync(path.resolve(filename));
     if (stats) {
-      var lljs = require('./vendors/lljs/bin/ljc');
       var compressjs = require('compressjs');
       var algorithm = compressjs.BWTC;
       var tmpname = 'neu' + crypto.randomBytes(4).readUInt32LE(0) + 'trino.js';
@@ -121,7 +120,7 @@ function runBinary(filename, cb) {
       fs.unlink(tmpfilename);
       process.exit(1);
     } else {
-      console.log("File Not Found:", filename);
+      console.log('File Not Found:', filename);
       process.exit(1);
     }
   } catch (e) {
@@ -137,7 +136,7 @@ function runBinary(filename, cb) {
  */
 function web(document) {
   var scripts = document.getElementsByTagName('script');
-  for (script in scripts) {
+  for (var script in scripts) {
     if (scripts[script].type === 'text/neutrinoscript') {
       var lljs = require('./vendors/lljs/bin/ljc');
       try {
@@ -145,7 +144,7 @@ function web(document) {
           eval(data); // @TODO: Remove the evil eval
         });
       } catch (e) {
-        console.log("Error:", e);
+        console.log('Error:', e);
       }
     }
   }
@@ -164,7 +163,7 @@ function webToJS(script, cb) {
       cb(data);
     });
   } catch (e) {
-    console.log("Error:", e);
+    console.log('Error:', e);
   }
 }
 
@@ -174,4 +173,4 @@ module.exports = {
   runBinary: runBinary,
   web: web,
   webToJS: webToJS
-}
+};

@@ -3,26 +3,26 @@
 if (!CodeMirror.modeExtensions) CodeMirror.modeExtensions = {};
 
 // Returns the extension of the editor's current mode
-CodeMirror.defineExtension("getModeExt", function () {
-  var mname = CodeMirror.resolveMode(this.getOption("mode")).name;
+CodeMirror.defineExtension('getModeExt', function () {
+  var mname = CodeMirror.resolveMode(this.getOption('mode')).name;
   var ext = CodeMirror.modeExtensions[mname];
-  if (!ext) throw new Error("No extensions found for mode " + mname);
+  if (!ext) throw new Error('No extensions found for mode ' + mname);
   return ext;
 });
 
 // If the current mode is 'htmlmixed', returns the extension of a mode located at
 // the specified position (can be htmlmixed, css or javascript). Otherwise, simply
 // returns the extension of the editor's current mode.
-CodeMirror.defineExtension("getModeExtAtPos", function (pos) {
+CodeMirror.defineExtension('getModeExtAtPos', function (pos) {
   var token = this.getTokenAt(pos);
   if (token && token.state && token.state.mode)
-    return CodeMirror.modeExtensions[token.state.mode == "html" ? "htmlmixed" : token.state.mode];
+    return CodeMirror.modeExtensions[token.state.mode == 'html' ? 'htmlmixed' : token.state.mode];
   else
     return this.getModeExt();
 });
 
 // Comment/uncomment the specified range
-CodeMirror.defineExtension("commentRange", function (isComment, from, to) {
+CodeMirror.defineExtension('commentRange', function (isComment, from, to) {
   var curMode = this.getModeExtAtPos(this.getCursor());
   if (isComment) { // Comment range
     var commentedText = this.getRange(from, to);
@@ -41,7 +41,7 @@ CodeMirror.defineExtension("commentRange", function (isComment, from, to) {
       selText = selText.substr(0, startIndex)
       // From comment start till comment end
         + selText.substring(startIndex + curMode.commentStart.length, endIndex)
-      // From comment end till string end
+        // From comment end till string end
         + selText.substr(endIndex + curMode.commentEnd.length);
     }
     this.replaceRange(selText, from, to);
@@ -49,17 +49,17 @@ CodeMirror.defineExtension("commentRange", function (isComment, from, to) {
 });
 
 // Applies automatic mode-aware indentation to the specified range
-CodeMirror.defineExtension("autoIndentRange", function (from, to) {
+CodeMirror.defineExtension('autoIndentRange', function (from, to) {
   var cmInstance = this;
   this.operation(function () {
     for (var i = from.line; i <= to.line; i++) {
-      cmInstance.indentLine(i, "smart");
+      cmInstance.indentLine(i, 'smart');
     }
   });
 });
 
 // Applies automatic formatting to the specified range
-CodeMirror.defineExtension("autoFormatRange", function (from, to) {
+CodeMirror.defineExtension('autoFormatRange', function (from, to) {
   var absStart = this.indexFromPos(from);
   var absEnd = this.indexFromPos(to);
   // Insert additional line breaks where necessary according to the
@@ -73,34 +73,34 @@ CodeMirror.defineExtension("autoFormatRange", function (from, to) {
     var startLine = cmInstance.posFromIndex(absStart).line;
     var endLine = cmInstance.posFromIndex(absStart + res.length).line;
     for (var i = startLine; i <= endLine; i++) {
-      cmInstance.indentLine(i, "smart");
+      cmInstance.indentLine(i, 'smart');
     }
   });
 });
 
 // Define extensions for a few modes
 
-CodeMirror.modeExtensions["css"] = {
-  commentStart: "/*",
-  commentEnd: "*/",
-  wordWrapChars: [";", "\\{", "\\}"],
+CodeMirror.modeExtensions['css'] = {
+  commentStart: '/*',
+  commentEnd: '*/',
+  wordWrapChars: [';', '\\{', '\\}'],
   autoFormatLineBreaks: function (text) {
-    return text.replace(new RegExp("(;|\\{|\\})([^\r\n])", "g"), "$1\n$2");
+    return text.replace(new RegExp('(;|\\{|\\})([^\r\n])', 'g'), '$1\n$2');
   }
 };
 
-CodeMirror.modeExtensions["javascript"] = {
-  commentStart: "/*",
-  commentEnd: "*/",
-  wordWrapChars: [";", "\\{", "\\}"],
+CodeMirror.modeExtensions['javascript'] = {
+  commentStart: '/*',
+  commentEnd: '*/',
+  wordWrapChars: [';', '\\{', '\\}'],
 
   getNonBreakableBlocks: function (text) {
     var nonBreakableRegexes = [
-        new RegExp("for\\s*?\\(([\\s\\S]*?)\\)"),
-        new RegExp("'([\\s\\S]*?)('|$)"),
-        new RegExp("\"([\\s\\S]*?)(\"|$)"),
-        new RegExp("//.*([\r\n]|$)")
-      ];
+      new RegExp('for\\s*?\\(([\\s\\S]*?)\\)'),
+      new RegExp('\'([\\s\\S]*?)(\'|$)'),
+      new RegExp('"([\\s\\S]*?)("|$)'),
+      new RegExp('//.*([\r\n]|$)')
+    ];
     var nonBreakableBlocks = new Array();
     for (var i = 0; i < nonBreakableRegexes.length; i++) {
       var curPos = 0;
@@ -127,13 +127,13 @@ CodeMirror.modeExtensions["javascript"] = {
 
   autoFormatLineBreaks: function (text) {
     var curPos = 0;
-    var reLinesSplitter = new RegExp("(;|\\{|\\})([^\r\n])", "g");
+    var reLinesSplitter = new RegExp('(;|\\{|\\})([^\r\n])', 'g');
     var nonBreakableBlocks = this.getNonBreakableBlocks(text);
     if (nonBreakableBlocks != null) {
-      var res = "";
+      var res = '';
       for (var i = 0; i < nonBreakableBlocks.length; i++) {
         if (nonBreakableBlocks[i].start > curPos) { // Break lines till the block
-          res += text.substring(curPos, nonBreakableBlocks[i].start).replace(reLinesSplitter, "$1\n$2");
+          res += text.substring(curPos, nonBreakableBlocks[i].start).replace(reLinesSplitter, '$1\n$2');
           curPos = nonBreakableBlocks[i].start;
         }
         if (nonBreakableBlocks[i].start <= curPos
@@ -143,69 +143,69 @@ CodeMirror.modeExtensions["javascript"] = {
         }
       }
       if (curPos < text.length - 1) {
-        res += text.substr(curPos).replace(reLinesSplitter, "$1\n$2");
+        res += text.substr(curPos).replace(reLinesSplitter, '$1\n$2');
       }
       return res;
     }
     else {
-      return text.replace(reLinesSplitter, "$1\n$2");
+      return text.replace(reLinesSplitter, '$1\n$2');
     }
   }
 };
 
-CodeMirror.modeExtensions["xml"] = {
-  commentStart: "<!--",
-  commentEnd: "-->",
-  wordWrapChars: [">"],
+CodeMirror.modeExtensions['xml'] = {
+  commentStart: '<!--',
+  commentEnd: '-->',
+  wordWrapChars: ['>'],
 
   autoFormatLineBreaks: function (text) {
-    var lines = text.split("\n");
-    var reProcessedPortion = new RegExp("(^\\s*?<|^[^<]*?)(.+)(>\\s*?$|[^>]*?$)");
-    var reOpenBrackets = new RegExp("<", "g");
-    var reCloseBrackets = new RegExp("(>)([^\r\n])", "g");
+    var lines = text.split('\n');
+    var reProcessedPortion = new RegExp('(^\\s*?<|^[^<]*?)(.+)(>\\s*?$|[^>]*?$)');
+    var reOpenBrackets = new RegExp('<', 'g');
+    var reCloseBrackets = new RegExp('(>)([^\r\n])', 'g');
     for (var i = 0; i < lines.length; i++) {
       var mToProcess = lines[i].match(reProcessedPortion);
       if (mToProcess != null && mToProcess.length > 3) { // The line starts with whitespaces and ends with whitespaces
         lines[i] = mToProcess[1]
-            + mToProcess[2].replace(reOpenBrackets, "\n$&").replace(reCloseBrackets, "$1\n$2")
+            + mToProcess[2].replace(reOpenBrackets, '\n$&').replace(reCloseBrackets, '$1\n$2')
             + mToProcess[3];
         continue;
       }
     }
 
-    return lines.join("\n");
+    return lines.join('\n');
   }
 };
 
-CodeMirror.modeExtensions["htmlmixed"] = {
-  commentStart: "<!--",
-  commentEnd: "-->",
-  wordWrapChars: [">", ";", "\\{", "\\}"],
+CodeMirror.modeExtensions['htmlmixed'] = {
+  commentStart: '<!--',
+  commentEnd: '-->',
+  wordWrapChars: ['>', ';', '\\{', '\\}'],
 
   getModeInfos: function (text, absPos) {
     var modeInfos = new Array();
     modeInfos[0] =
       {
         pos: 0,
-        modeExt: CodeMirror.modeExtensions["xml"],
-        modeName: "xml"
+        modeExt: CodeMirror.modeExtensions['xml'],
+        modeName: 'xml'
       };
 
     var modeMatchers = new Array();
     modeMatchers[0] =
       {
-        regex: new RegExp("<style[^>]*>([\\s\\S]*?)(</style[^>]*>|$)", "i"),
-        modeExt: CodeMirror.modeExtensions["css"],
-        modeName: "css"
+        regex: new RegExp('<style[^>]*>([\\s\\S]*?)(</style[^>]*>|$)', 'i'),
+        modeExt: CodeMirror.modeExtensions['css'],
+        modeName: 'css'
       };
     modeMatchers[1] =
       {
-        regex: new RegExp("<script[^>]*>([\\s\\S]*?)(</script[^>]*>|$)", "i"),
-        modeExt: CodeMirror.modeExtensions["javascript"],
-        modeName: "javascript"
+        regex: new RegExp('<script[^>]*>([\\s\\S]*?)(</script[^>]*>|$)', 'i'),
+        modeExt: CodeMirror.modeExtensions['javascript'],
+        modeName: 'javascript'
       };
 
-    var lastCharPos = (typeof (absPos) !== "undefined" ? absPos : text.length - 1);
+    var lastCharPos = (typeof (absPos) !== 'undefined' ? absPos : text.length - 1);
     // Detect modes for the entire text
     for (var i = 0; i < modeMatchers.length; i++) {
       var curPos = 0;
@@ -250,9 +250,9 @@ CodeMirror.modeExtensions["htmlmixed"] = {
 
   autoFormatLineBreaks: function (text, startPos, endPos) {
     var modeInfos = this.getModeInfos(text);
-    var reBlockStartsWithNewline = new RegExp("^\\s*?\n");
-    var reBlockEndsWithNewline = new RegExp("\n\\s*?$");
-    var res = "";
+    var reBlockStartsWithNewline = new RegExp('^\\s*?\n');
+    var reBlockEndsWithNewline = new RegExp('\n\\s*?$');
+    var res = '';
     // Use modes info to break lines correspondingly
     if (modeInfos.length > 1) { // Deal with multi-mode text
       for (var i = 1; i <= modeInfos.length; i++) {
@@ -272,14 +272,14 @@ CodeMirror.modeExtensions["htmlmixed"] = {
           selEnd = endPos;
         }
         var textPortion = text.substring(selStart, selEnd);
-        if (modeInfos[i - 1].modeName != "xml") { // Starting a CSS or JavaScript block
+        if (modeInfos[i - 1].modeName != 'xml') { // Starting a CSS or JavaScript block
           if (!reBlockStartsWithNewline.test(textPortion)
               && selStart > 0) { // The block does not start with a line break
-            textPortion = "\n" + textPortion;
+            textPortion = '\n' + textPortion;
           }
           if (!reBlockEndsWithNewline.test(textPortion)
               && selEnd < text.length - 1) { // The block does not end with a line break
-            textPortion += "\n";
+            textPortion += '\n';
           }
         }
         res += modeInfos[i - 1].modeExt.autoFormatLineBreaks(textPortion);

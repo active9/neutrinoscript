@@ -2,19 +2,19 @@
 //   Copyright (C) 2011 by Daniel Glazman <daniel@glazman.org>
 // released under the MIT license (../../LICENSE) like the rest of CodeMirror
 CodeMirror.tagRangeFinder = function(cm, line, hideEnd) {
-  var nameStartChar = "A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD";
-  var nameChar = nameStartChar + "\-\.0-9\\u00B7\\u0300-\\u036F\\u203F-\\u2040";
-  var xmlNAMERegExp = new RegExp("^[" + nameStartChar + "][" + nameChar + "]*");
+  var nameStartChar = 'A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD';
+  var nameChar = nameStartChar + '\-\.0-9\\u00B7\\u0300-\\u036F\\u203F-\\u2040';
+  var xmlNAMERegExp = new RegExp('^[' + nameStartChar + '][' + nameChar + ']*');
 
   var lineText = cm.getLine(line);
   var found = false;
   var tag = null;
   var pos = 0;
   while (!found) {
-    pos = lineText.indexOf("<", pos);
+    pos = lineText.indexOf('<', pos);
     if (-1 == pos) // no tag on line
       return;
-    if (pos + 1 < lineText.length && lineText[pos + 1] == "/") { // closing tag
+    if (pos + 1 < lineText.length && lineText[pos + 1] == '/') { // closing tag
       pos++;
       continue;
     }
@@ -23,17 +23,17 @@ CodeMirror.tagRangeFinder = function(cm, line, hideEnd) {
       pos++;
       continue;
     }
-    var gtPos = lineText.indexOf(">", pos + 1);
+    var gtPos = lineText.indexOf('>', pos + 1);
     if (-1 == gtPos) { // end of start tag not in line
       var l = line + 1;
       var foundGt = false;
       var lastLine = cm.lineCount();
       while (l < lastLine && !foundGt) {
         var lt = cm.getLine(l);
-        var gt = lt.indexOf(">");
+        var gt = lt.indexOf('>');
         if (-1 != gt) { // found a >
           foundGt = true;
-          var slash = lt.lastIndexOf("/", gt);
+          var slash = lt.lastIndexOf('/', gt);
           if (-1 != slash && slash < gt) {
             var str = lineText.substr(slash, gt - slash + 1);
             if (!str.match( /\/\s*\>/ )) { // yep, that's the end of empty tag
@@ -47,7 +47,7 @@ CodeMirror.tagRangeFinder = function(cm, line, hideEnd) {
       found = true;
     }
     else {
-      var slashPos = lineText.lastIndexOf("/", gtPos);
+      var slashPos = lineText.lastIndexOf('/', gtPos);
       if (-1 == slashPos) { // cannot be empty tag
         found = true;
         // don't continue
@@ -68,7 +68,7 @@ CodeMirror.tagRangeFinder = function(cm, line, hideEnd) {
         // we have an element name, wooohooo !
         tag = tag[0];
         // do we have the close tag on same line ???
-        if (-1 != lineText.indexOf("</" + tag + ">", pos)) // yep
+        if (-1 != lineText.indexOf('</' + tag + '>', pos)) // yep
         {
           found = false;
         }
@@ -82,9 +82,9 @@ CodeMirror.tagRangeFinder = function(cm, line, hideEnd) {
   }
 
   if (found) {
-    var startTag = "(\\<\\/" + tag + "\\>)|(\\<" + tag + "\\>)|(\\<" + tag + "\\s)|(\\<" + tag + "$)";
-    var startTagRegExp = new RegExp(startTag, "g");
-    var endTag = "</" + tag + ">";
+    var startTag = '(\\<\\/' + tag + '\\>)|(\\<' + tag + '\\>)|(\\<' + tag + '\\s)|(\\<' + tag + '$)';
+    var startTagRegExp = new RegExp(startTag, 'g');
+    var endTag = '</' + tag + '>';
     var depth = 1;
     var l = line + 1;
     var lastLine = cm.lineCount();
@@ -111,14 +111,14 @@ CodeMirror.tagRangeFinder = function(cm, line, hideEnd) {
 
 CodeMirror.braceRangeFinder = function(cm, line, hideEnd) {
   var lineText = cm.getLine(line);
-  var startChar = lineText.lastIndexOf("{");
-  if (startChar < 0 || lineText.lastIndexOf("}") > startChar) return;
+  var startChar = lineText.lastIndexOf('{');
+  if (startChar < 0 || lineText.lastIndexOf('}') > startChar) return;
   var tokenType = cm.getTokenAt({line: line, ch: startChar}).className;
   var count = 1, lastLine = cm.lineCount(), end;
   outer: for (var i = line + 1; i < lastLine; ++i) {
     var text = cm.getLine(i), pos = 0;
     for (;;) {
-      var nextOpen = text.indexOf("{", pos), nextClose = text.indexOf("}", pos);
+      var nextOpen = text.indexOf('{', pos), nextClose = text.indexOf('}', pos);
       if (nextOpen < 0) nextOpen = text.length;
       if (nextClose < 0) nextClose = text.length;
       pos = Math.min(nextOpen, nextClose);
@@ -136,7 +136,7 @@ CodeMirror.braceRangeFinder = function(cm, line, hideEnd) {
 };
 
 CodeMirror.indentRangeFinder = function(cm, line) {
-  var tabSize = cm.getOption("tabSize");
+  var tabSize = cm.getOption('tabSize');
   var myIndent = cm.getLineHandle(line).indentation(tabSize), last;
   for (var i = line + 1, end = cm.lineCount(); i < end; ++i) {
     var handle = cm.getLineHandle(i);

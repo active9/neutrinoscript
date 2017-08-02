@@ -22,14 +22,14 @@ var CommandFunc = {};
 // Parse a  /*# comment
 function comment() {
 
-	var line;
+  var line;
 
-	for(;;) {
-		line = nextLine();
+  for(;;) {
+    line = nextLine();
 
-		if (line === undefined || line.trimLeft().startsWith("#*/"))
-			break;
-	}
+    if (line === undefined || line.trimLeft().startsWith('#*/'))
+      break;
+  }
 }
 
 
@@ -39,47 +39,47 @@ function comment() {
 
 // #define:  create a constant / macro
 
-CommandFunc["define"] = function() {
+CommandFunc['define'] = function() {
 
-	var name = str.match(/^[A-Za-z0-9_]+/)[0];
-	str = str.substr(name.length).trimLeft();
-
-
-	var func = false;
-
-	if (str.search(/^\([A-Za-z0-9_,]+\)/) != -1) {
-		func = true;
-
-		var i1 = str.indexOf(")"), i2 = 1, i3 = 0;
-		var params = [];
-
-		while( (i3 = str.indexOf(",", i2+1)) != -1 ) {
-			params.push(str.substr(i2, i3 - i2));
-			i2 = i3+1;
-		}
-
-		params.push(str.substr(i2, i1 - i2));
-
-		str = str.substr(i1+1).trimLeft();
-	}
+  var name = str.match(/^[A-Za-z0-9_]+/)[0];
+  str = str.substr(name.length).trimLeft();
 
 
-	var content = '';
-	str = str.trimRight();
+  var func = false;
 
-	while (str.last() == "\\") {
-		content += str.substr(0, str.length - 1) + '\n';
-		str = nextLine().trimRight();
-	}
-	content += str;
+  if (str.search(/^\([A-Za-z0-9_,]+\)/) != -1) {
+    func = true;
 
-	content = addConstantes(content);
+    var i1 = str.indexOf(')'), i2 = 1, i3 = 0;
+    var params = [];
+
+    while( (i3 = str.indexOf(',', i2+1)) != -1 ) {
+      params.push(str.substr(i2, i3 - i2));
+      i2 = i3+1;
+    }
+
+    params.push(str.substr(i2, i1 - i2));
+
+    str = str.substr(i1+1).trimLeft();
+  }
 
 
-	if (func)
-		CreateMacro(name, params, content.trim());
-	else
-		Constantes[name] = content.trim();
+  var content = '';
+  str = str.trimRight();
+
+  while (str.last() == '\\') {
+    content += str.substr(0, str.length - 1) + '\n';
+    str = nextLine().trimRight();
+  }
+  content += str;
+
+  content = addConstantes(content);
+
+
+  if (func)
+    CreateMacro(name, params, content.trim());
+  else
+    Constantes[name] = content.trim();
 
 };
 
@@ -92,10 +92,10 @@ CommandFunc["define"] = function() {
 
 // #undef: delete a constant / macro
 
-CommandFunc["undef"] = function() {
-	var name = str.match(/^[A-Za-z0-9_]+/)[0];
-	delete Constantes[name];
-	delete Functions[name];
+CommandFunc['undef'] = function() {
+  var name = str.match(/^[A-Za-z0-9_]+/)[0];
+  delete Constantes[name];
+  delete Functions[name];
 };
 
 
@@ -106,21 +106,21 @@ CommandFunc["undef"] = function() {
 
 // #include: include and parse a file
 
-CommandFunc["include"] = function() {
+CommandFunc['include'] = function() {
 	
-	var l = currentLine,
-		f = currentFile,
-		p = currentPath;
+  var l = currentLine,
+    f = currentFile,
+    p = currentPath;
 
-	var name = str.match(/^"([A-Za-z0-9\-_\. \/\\]+)"/);
-	if (!name || !name[1])
-		error("invalid include");
+  var name = str.match(/^"([A-Za-z0-9\-_\. \/\\]+)"/);
+  if (!name || !name[1])
+    error('invalid include');
 
-	result += ParseFile(currentPath + name[1]) + '\r\n';
+  result += ParseFile(currentPath + name[1]) + '\r\n';
 
-	currentLine = l;
-	currentFile = f;
-	currentPath = p;
+  currentLine = l;
+  currentFile = f;
+  currentPath = p;
 };
 
 
@@ -133,24 +133,24 @@ CommandFunc["include"] = function() {
 
 // #ifndeff / #ifdef: conditon
 
-CommandFunc["ifndef"] = function() {
-	var name = str.match(/^[A-Za-z0-9_]+/)[0];
+CommandFunc['ifndef'] = function() {
+  var name = str.match(/^[A-Za-z0-9_]+/)[0];
 
-	if (Constantes[name] != undefined || Functions[name] != undefined)
-		condition();
+  if (Constantes[name] != undefined || Functions[name] != undefined)
+    condition();
 };
 
 
-CommandFunc["ifdef"] = function() {
-	var name = str.match(/^[A-Za-z0-9_]+/)[0];
+CommandFunc['ifdef'] = function() {
+  var name = str.match(/^[A-Za-z0-9_]+/)[0];
 
-	if (Constantes[name] == undefined && Functions[name] == undefined)
-		condition();
+  if (Constantes[name] == undefined && Functions[name] == undefined)
+    condition();
 };
 
 
-CommandFunc["endif"] = CommandFunc["else"] = function() {
-	// Escape the line
+CommandFunc['endif'] = CommandFunc['else'] = function() {
+  // Escape the line
 };
 
 
@@ -158,27 +158,27 @@ CommandFunc["endif"] = CommandFunc["else"] = function() {
 // Parse a condition
 function condition() {
 
-	var line, n = 1;
+  var line, n = 1;
 
-	for(;;) {
-		line = nextLine();
+  for(;;) {
+    line = nextLine();
 
-		if (line === undefined)
-			return;
+    if (line === undefined)
+      return;
 
-		line = line.trim();
+    line = line.trim();
 
-		if (line.startsWith("#ifdef") || line.startsWith("#ifndef"))
-			n++;
+    if (line.startsWith('#ifdef') || line.startsWith('#ifndef'))
+      n++;
 
-		else if (line.startsWith("#else") && n == 1)
-			return;
+    else if (line.startsWith('#else') && n == 1)
+      return;
 
-		else if (line.startsWith("#endif")) {
-			n--;
-			if (!n) return;
-		}
-	}
+    else if (line.startsWith('#endif')) {
+      n--;
+      if (!n) return;
+    }
+  }
 }
 
 
@@ -190,19 +190,19 @@ function condition() {
 
 // #enum: c like enumeration
 
-CommandFunc["enum"] = function() {
+CommandFunc['enum'] = function() {
 	
-	var line, str = '';
+  var line, str = '';
 
-	for(;;) {
-		line = nextLine();
-		if (line === undefined || line.trimLeft().startsWith("#endenum"))
-			break;
+  for(;;) {
+    line = nextLine();
+    if (line === undefined || line.trimLeft().startsWith('#endenum'))
+      break;
 
-		str += line;
-	}
+    str += line;
+  }
 
-	str.split(',').forEach(function(c, i) {
-		Constantes[ c.trim() ] = Options.enumHex ? '0x'+i.toString(16) : i.toString();
-	});
+  str.split(',').forEach(function(c, i) {
+    Constantes[ c.trim() ] = Options.enumHex ? '0x'+i.toString(16) : i.toString();
+  });
 };

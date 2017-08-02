@@ -17,55 +17,55 @@ var compiler = require('./lib/compiler.js');
 
 function modifyOptions(options) {
 
-	if (!options || typeof options != "object")
-		return;
+  if (!options || typeof options != 'object')
+    return;
 
-	for (var i in options)
-		compiler.o[i] = options[i];
+  for (var i in options)
+    compiler.o[i] = options[i];
 }
 
 
 
 module.exports = {
 
-	compile: function(file, options, callback) {
+  compile: function(file, options, callback) {
 
-		if (typeof options == "function")
-			callback = options;
-		else
-			modifyOptions(options);
+    if (typeof options == 'function')
+      callback = options;
+    else
+      modifyOptions(options);
 
-		var result;
+    var result;
 
-		try {
-			result = compiler.p(file);
-		} catch(e) {
-			callback(e, '');
-			return;
-		}
+    try {
+      result = compiler.p(file);
+    } catch(e) {
+      callback(e, '');
+      return;
+    }
 
-		callback(null, result);
-	},
+    callback(null, result);
+  },
 
 
 
-	compileStr: function(str, options, callback) {
+  compileStr: function(str, options, callback) {
 
-		if (typeof options == "function")
-			callback = options;
-		else
-			modifyOptions(options);
+    if (typeof options == 'function')
+      callback = options;
+    else
+      modifyOptions(options);
 
-		var result;
+    var result;
 
-		try {
-			result = compiler.p(str, true);
-		} catch(e) {
-			callback(e, '');
-			return;
-		}
+    try {
+      result = compiler.p(str, true);
+    } catch(e) {
+      callback(e, '');
+      return;
+    }
 
-		callback(null, result);
-	}
+    callback(null, result);
+  }
 
 };

@@ -5,30 +5,40 @@ var fs = require('fs');
 var path = require('path');
 var neutrino = require('../index.js');
 
+var fileExists = function(filename, callback) {
+  fs.readFile(filename, 'utf8', function(err) {
+    if (!err){
+      callback(true);
+    }else{
+      callback(false);
+    }
+  }); 
+};
+
 program
-  .version(require('../package.json').version)
+  .version(require('../package.json').version);
 
 program
   .command('compile <file>')
   .alias('co')
   .description('compile a .neu file to .neutrino')
-  .option("-b, --build_build <build_path>", "build output (ex: ./build/<file>.neutrino)")
-  .option("-f, --file <file>", "The file to compile")
+  .option('-b, --build_build <build_path>', 'build output (ex: ./build/<file>.neutrino)')
+  .option('-f, --file <file>', 'The file to compile')
   .action(function(cmd, options){
-  	if (!options.file) {
-  		options.file = process.argv[process.argv.length-1];
-  	}
-  	if (!options.build_path) {
-  		options.build_path = './build/'+ path.basename(options.file).replace('.neu','.neutrino');
-  	}
-  	options.file = path.resolve(options.file);
-  	options.build_path = path.resolve(options.build_path);
+    if (!options.file) {
+      options.file = process.argv[process.argv.length-1];
+    }
+    if (!options.build_path) {
+      options.build_path = './build/'+ path.basename(options.file).replace('.neu','.neutrino');
+    }
+    options.file = path.resolve(process.cwd(), options.file);
+    options.build_path = path.resolve(process.cwd(), options.build_path);
     process.stdout.write('neutrino> '+ cmd +' compiling');
     setInterval(function() {
-    	process.stdout.write('.');
+      process.stdout.write('.');
     }, 1000);
-	// Compile .neu to .neutrino
-	neutrino.convertToJS(path.resolve(options.file),path.resolve(options.build_path));
+    // Compile .neu to .neutrino
+    neutrino.convertToJS(path.resolve(process.cwd(), options.file),path.resolve(process.cwd(), options.build_path));
   }).on('--help', function() {
     console.log('  Examples:');
     console.log();
@@ -41,22 +51,22 @@ program
   .command('run <file>')
   .alias('go')
   .description('run a .neu file')
-  .option("-f, --file <file>", "The .neu file to run")
+  .option('-f, --file <file>', 'The .neu file to run')
   .action(function(cmd, options){
-  	if (!options.file) {
-  		options.file = process.argv[process.argv.length-1];
-  	}
-    fs.exists(path.resolve(options.file), function(exists) {
+    if (!options.file) {
+      options.file = process.argv[process.argv.length-1];
+    }
+    fileExists(path.resolve(process.cwd(), options.file), function(exists) {
       if (exists) {
-      	if (options.file.match(/.*\.neutrino/g)) {
-    		// RUN A Compiled Neutrino Binary
-    		neutrino.runBinary(path.resolve(options.file));
-      	} else {
-    		// RUN A Neu File
-    		neutrino.run(path.resolve(options.file));
-      	}
+        if (options.file.match(/.*\.neutrino/g)) {
+        // RUN A Compiled Neutrino Binary
+          neutrino.runBinary(path.resolve(process.cwd(), options.file));
+        } else {
+        // RUN A Neu File
+          neutrino.run(path.resolve(process.cwd(), options.file));
+        }
       } else {
-        console.log("FIle Not Found:", options.file);
+        console.log('FIle Not Found:', options.file);
         process.exit(1);
       }
     });
@@ -71,13 +81,13 @@ program
   .command('exec <file>')
   .alias('ex')
   .description('run a compiled .neutrino file')
-  .option("-f, --file <file>", "The .neutrino binary to run")
+  .option('-f, --file <file>', 'The .neutrino binary to run')
   .action(function(cmd, options){
-  	if (!options.file) {
-  		options.file = process.argv[process.argv.length-1];
-  	}
-	// RUN A Compiled Neutrino Binary
-	neutrino.runBinary(path.resolve(options.file));
+    if (!options.file) {
+      options.file = process.argv[process.argv.length-1];
+    }
+    // RUN A Compiled Neutrino Binary
+    neutrino.runBinary(path.resolve(process.cwd(), options.file));
   }).on('--help', function() {
     console.log('  Example:');
     console.log();
@@ -89,8 +99,8 @@ program
   .command('convert <file>')
   .alias('js')
   .description('convert .neu file to .js')
-  .option("-f, --file <file>", "The .neu file to run")
-  .option("-j, --js_file <js_file>", "The .js output (ex: ./build/<file>.js)")
+  .option('-f, --file <file>', 'The .neu file to run')
+  .option('-j, --js_file <js_file>', 'The .js output (ex: ./build/<file>.js)')
   .action(function(cmd, options){
     if (!options.file) {
       options.file = process.argv[process.argv.length-2];
@@ -98,12 +108,12 @@ program
     if (!options.js_file) {
       options.js_file = process.argv[process.argv.length-1];
     }
-    fs.exists(path.resolve(options.file), function(exists) {
+    fileExists(path.resolve(process.cwd(), options.file), function(exists) {
       if (exists) {
         // Convert To Javascript
-        neutrino.convertToJS(path.resolve(options.file), path.resolve(options.js_file), { compress: false });
+        neutrino.convertToJS(path.resolve(process.cwd(), options.file), path.resolve(process.cwd(), options.js_file), { compress: false });
       } else {
-        console.log("FIle Not Found:", options.file);
+        console.log('FIle Not Found:', options.file);
         process.exit(1);
       }
     });
@@ -121,17 +131,17 @@ program
     if (!options.file) {
       options.file = process.argv[process.argv.length-1];
     }
-    fs.exists(path.resolve(options.file), function(exists) {
+    fileExists(path.resolve(process.cwd(), options.file), function(exists) {
       if (exists) {
         if (options.file.match(/.*\.neutrino/g)) {
         // RUN A Compiled Neutrino Binary
-        neutrino.runBinary(path.resolve(options.file));
+          neutrino.runBinary(path.resolve(process.cwd(), options.file));
         } else {
         // RUN A Neu File
-        neutrino.run(path.resolve(options.file));
+          neutrino.run(path.resolve(process.cwd(), options.file));
         }
       } else {
-        console.log("FIle Not Found:", options.file);
+        console.log('FIle Not Found:', options.file);
         process.exit(1);
       }
     });

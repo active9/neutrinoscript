@@ -1,6 +1,6 @@
 {
   "name": "neutrinoscript",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "Like C for Javascript",
   "bin": {
     "neutrino": "./bin/neutrino"
@@ -31,12 +31,12 @@
   "homepage": "http://neutrinoscript.com/",
   "dependencies": {
     "browserify-fs": "^1.0.0",
-    "commander": "^2.9.0",
+    "commander": "^2.11.0",
     "compressjs": "^1.0.3",
-    "google-closure-compiler": "^20160822.2.0",
-    "jsdoc": "^3.4.1",
-    "minami": "^1.1.1",
+    "google-closure-compiler": "^20170626.0.0",
+    "jsdoc": "^3.5.3",
+    "minami": "^1.2.3",
     "neutrino-memory": "^1.1.0",
-    "osenv": "^0.1.3"
+    "osenv": "^0.1.4"
   }
 }

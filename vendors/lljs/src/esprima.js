@@ -41,22 +41,22 @@
   'use strict';
 
   var Token,
-      TokenName,
-      Syntax,
-      PropertyKind,
-      Messages,
-      Regex,
-      Types,
-      maybeCasts,
-      source,
-      strict,
-      index,
-      lineNumber,
-      lineStart,
-      length,
-      buffer,
-      state,
-      extra;
+    TokenName,
+    Syntax,
+    PropertyKind,
+    Messages,
+    Regex,
+    Types,
+    maybeCasts,
+    source,
+    strict,
+    index,
+    lineNumber,
+    lineStart,
+    length,
+    buffer,
+    state,
+    extra;
 
   Token = {
     BooleanLiteral: 1,
@@ -253,7 +253,7 @@
   function isFutureReservedWord(id) {
     switch (id) {
 
-      // Future reserved words.
+    // Future reserved words.
     case 'class':
     case 'enum':
     case 'export':
@@ -285,7 +285,7 @@
   function isStrictModeReservedWord(id) {
     switch (id) {
 
-      // Strict Mode reserved words.
+    // Strict Mode reserved words.
     case 'implements':
     case 'interface':
     case 'package':
@@ -344,8 +344,8 @@
     }
 
     switch (id) {
-      // Future reserved words.
-      // 'const' is specialized as Keyword in V8.
+    // Future reserved words.
+    // 'const' is specialized as Keyword in V8.
     case 'const':
       return true;
 
@@ -573,10 +573,10 @@
 
   function scanPunctuator() {
     var start = index,
-        ch1 = source[index],
-        ch2,
-        ch3,
-        ch4;
+      ch1 = source[index],
+      ch2,
+      ch3,
+      ch4;
 
     // Check for most common single-character punctuators.
 
@@ -753,7 +753,7 @@
 
     ch = source[index];
     assert(isDecimalDigit(ch) || (ch === '.'),
-           'Numeric literal must start with a decimal digit or a decimal point');
+      'Numeric literal must start with a decimal digit or a decimal point');
 
     start = index;
     number = '';
@@ -894,7 +894,7 @@
 
     quote = source[index];
     assert((quote === '\'' || quote === '"'),
-           'String literal must starts with a quote');
+      'String literal must starts with a quote');
 
     start = index;
     ++index;
@@ -1191,13 +1191,13 @@
 
   function throwError(token, messageFormat) {
     var error,
-        args = Array.prototype.slice.call(arguments, 2),
-        msg = messageFormat.replace(
-            /%(\d)/g,
-          function (whole, index) {
-            return args[index] || '';
-          }
-        );
+      args = Array.prototype.slice.call(arguments, 2),
+      msg = messageFormat.replace(
+        /%(\d)/g,
+        function (whole, index) {
+          return args[index] || '';
+        }
+      );
 
     if (typeof token.lineNumber === 'number') {
       error = new Error(msg);
@@ -1301,7 +1301,7 @@
 
   function matchAssign() {
     var token = lookahead(),
-        op = token.value;
+      op = token.value;
 
     if (token.type !== Token.Punctuator) {
       return false;
@@ -1368,7 +1368,7 @@
 
   function parseArrayInitialiser() {
     var elements = [],
-        undef;
+      undef;
 
     expect('[');
 
@@ -1543,14 +1543,14 @@
 
   function parsePrimaryExpression() {
     var expr,
-        token = lookahead(),
-        type = token.type;
+      token = lookahead(),
+      type = token.type;
 
     if (type === Token.Identifier) {
       return {
         type: Syntax.Identifier,
         name: lex().value,
-        kind: "variable"
+        kind: 'variable'
       };
     }
 
@@ -2122,7 +2122,7 @@
 
   function parseStatementList() {
     var list = [],
-        statement;
+      statement;
 
     while (index < length) {
       if (match('}')) {
@@ -2165,7 +2165,7 @@
     return {
       type: Syntax.Identifier,
       name: token.value,
-      kind: "variable"
+      kind: 'variable'
     };
   }
 
@@ -2191,8 +2191,8 @@
 
   function parseVariableDeclaration(kind, noAssignment, typeIdentifier) {
     var declaredType = parsePointerType(typeIdentifier),
-        id = parseVariableIdentifier(),
-        init = null;
+      id = parseVariableIdentifier(),
+      init = null;
 
     var args = undefined;
 
@@ -2286,7 +2286,7 @@
 
     var original;
     var token = lookahead();
-    if (token.type === Token.Keyword && (token.value === "struct" || token.value === "union")) {
+    if (token.type === Token.Keyword && (token.value === 'struct' || token.value === 'union')) {
       var original = parseStructType();
       var alias = parseTypeIdentifier(true);
     } else {
@@ -2334,7 +2334,7 @@
     expectKeyword('var');
 
     declarations = parseVariableDeclarationList(undefined, noAssignment,
-                                                parseTypeIdentifier());
+      parseTypeIdentifier());
 
     consumeSemicolon();
 
@@ -2754,7 +2754,7 @@
 
   function parseSwitchCase(test) {
     var consequent = [],
-        statement;
+      statement;
 
     while (index < length) {
       if (match('}') || matchKeyword('default') || matchKeyword('case')) {
@@ -2918,8 +2918,8 @@
 
   function parseStatement() {
     var token = lookahead(),
-        expr,
-        labeledBody;
+      expr,
+      labeledBody;
 
     if (token.type === Token.EOF) {
       throwUnexpected(token);
@@ -3006,7 +3006,7 @@
 
   function parseFunctionSourceElements() {
     var sourceElement, sourceElements = [], token, directive, firstRestricted,
-        oldLabelSet, oldInIteration, oldInSwitch, oldInFunctionBody;
+      oldLabelSet, oldInIteration, oldInSwitch, oldInFunctionBody;
 
     expect('{');
 
@@ -3121,14 +3121,14 @@
       }
       var modifiers = parseModifiers();
       var list = [];
-      if (matchKeyword("function")) {
+      if (matchKeyword('function')) {
         list.push(parseFunctionDeclaration());
-      } else if (matchKeyword("struct") || matchKeyword("union")) {
+      } else if (matchKeyword('struct') || matchKeyword('union')) {
         list.push.apply(list, parseVariableDeclarationList(undefined, true,
-                                                           parseStructType()));
+          parseStructType()));
       } else {
         list.push.apply(list, parseVariableDeclarationList(undefined, true,
-                                                           parseTypeIdentifier()));
+          parseTypeIdentifier()));
       }
       members.push.apply(members, list.map(function (x) {
         return {
@@ -3220,7 +3220,7 @@
       if (!paramTypes[i]) {
         paramTypes[i] = {
           type: Syntax.TypeIdentifier,
-          name: "dyn",
+          name: 'dyn',
           range: params[i].range
         };
       }
@@ -3228,9 +3228,9 @@
     if (!returnType) {
       returnType = {
         type: Syntax.TypeIdentifier,
-        name: "dyn",
+        name: 'dyn',
         range: [start, start]
-      }
+      };
     }
 
     return {
@@ -3321,7 +3321,7 @@
       if (!paramTypes[i]) {
         paramTypes[i] = {
           type: Syntax.TypeIdentifier,
-          name: "dyn",
+          name: 'dyn',
           range: params[i].range
         };
       }
@@ -3329,9 +3329,9 @@
     if (!returnType) {
       returnType = {
         type: Syntax.TypeIdentifier,
-        name: "dyn",
+        name: 'dyn',
         range: [start, start]
-      }
+      };
     }
 
     return {
@@ -3544,8 +3544,8 @@
 
   function collectToken() {
     var token = extra.advance(),
-        range,
-        value;
+      range,
+      value;
 
     if (token.type !== Token.EOF) {
       range = [token.range[0], token.range[1]];
@@ -3850,8 +3850,8 @@
 
   function stringToArray(str) {
     var length = str.length,
-        result = [],
-        i;
+      result = [],
+      i;
     for (i = 0; i < length; ++i) {
       result[i] = str.charAt(i);
     }
